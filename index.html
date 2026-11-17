@@ -13,8 +13,12 @@ header .name{font-size:26px;font-weight:800;color:#E8A317}
 header .job{font-size:15px;color:#C9BFAE;margin-top:4px}
 h1{font-size:22px;line-height:1.5;text-align:center;margin-bottom:16px}
 h1 b{color:#E8A317}
-.video-wrap{width:100%;max-width:420px;border-radius:18px;overflow:hidden;border:2px solid #E8A317;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+.video-wrap{width:100%;max-width:420px;border-radius:18px;overflow:hidden;border:2px solid #E8A317;box-shadow:0 10px 40px rgba(0,0,0,.6);position:relative;cursor:pointer}
 video{width:100%;display:block;background:#000}
+.play-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(0,0,0,.35);z-index:2}
+.play-overlay .play-btn{width:84px;height:84px;border-radius:50%;background:#E8A317;color:#0A0F0C;display:flex;align-items:center;justify-content:center;font-size:36px;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(232,163,23,.55)}
+.play-overlay .play-txt{font-size:18px;font-weight:800;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.play-overlay.hidden{display:none}
 .cta{margin:22px 0 10px;font-size:17px;font-weight:700;text-align:center}
 .buttons{width:100%;max-width:420px;display:flex;flex-direction:column;gap:12px}
 .btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:15px 18px;border-radius:14px;font-size:18px;font-weight:800;color:#fff;text-decoration:none}
@@ -31,9 +35,25 @@ footer{margin-top:26px;font-size:13px;color:#8A8378;text-align:center}
 <div class="job">مطور مواقع وتطبيقات — منيو إلكتروني بكود QR</div>
 </header>
 <h1>المنيو تاعك مازال في <b>الستوري</b>؟<br>تفرج الفيديو 👇</h1>
-<div class="video-wrap">
-<video src="video.mp4" poster="poster.jpg" controls autoplay muted loop playsinline></video>
+<div class="video-wrap" id="videoWrap">
+<video id="promoVideo" src="video.mp4" poster="poster.jpg" controls loop playsinline preload="metadata"></video>
+<div class="play-overlay" id="playOverlay">
+<button class="play-btn" id="playBtn" aria-label="شغل الفيديو">▶</button>
+<div class="play-txt">شغل الفيديو بالصوت 🔊</div>
 </div>
+</div>
+<script>
+(function(){
+var v=document.getElementById('promoVideo'),
+o=document.getElementById('playOverlay'),
+w=document.getElementById('videoWrap');
+function playWithSound(){v.muted=false;v.volume=1;v.play();o.classList.add('hidden');}
+document.getElementById('playBtn').addEventListener('click',function(e){e.stopPropagation();playWithSound();});
+o.addEventListener('click',playWithSound);
+v.addEventListener('play',function(){o.classList.add('hidden');});
+v.addEventListener('pause',function(){o.classList.remove('hidden');});
+})();
+</script>
 <div class="cta">حاب منيو كيما هاذا؟ كونطاكطيني 👇</div>
 <div class="buttons">
 <a class="btn btn-wa" href="https://wa.me/213797475073?text=%D8%B3%D9%84%D8%A7%D9%85%D8%8C%20%D8%B4%D9%81%D8%AA%20%D8%A7%D9%84%D9%81%D9%8A%D8%AF%D9%8A%D9%88%20%D9%88%D8%AD%D8%A7%D8%A8%20%D9%86%D8%AE%D8%AF%D9%85%20%D9%85%D9%86%D9%8A%D9%88%20%D9%83%D9%8A%D9%85%D8%A7%20%D9%87%D8%A7%D8%B0%D8%A7">💬 واتساب <small>0797475073</small></a>
